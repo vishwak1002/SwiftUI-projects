@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Observation
 
 
 struct ExpenseItem:Identifiable,Codable,Equatable {
@@ -14,9 +15,9 @@ struct ExpenseItem:Identifiable,Codable,Equatable {
     let type: String
     let amount: Double
 }
-
-class Expenses: ObservableObject {
-    @Published var items = [ExpenseItem](){
+@Observable
+class Expenses {
+    var items = [ExpenseItem](){
         didSet {
             if let encoded = try? JSONEncoder().encode(items) {
                 UserDefaults.standard.set(encoded, forKey: "Items")
@@ -42,7 +43,7 @@ class Expenses: ObservableObject {
 struct ContentView: View {
     //    @StateObject  var user = User()
     //    @State private var showingSheet = false
-    @StateObject var expenses=Expenses()
+    @State private var expenses=Expenses()
     
     private var personal:[ExpenseItem]{
         expenses.items.filter({$0.type == "Personal"})
@@ -68,7 +69,7 @@ struct ContentView: View {
         }
     }
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 
                 Section{

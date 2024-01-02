@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddView: View {
-    @ObservedObject var expenses:Expenses
+    var expenses:Expenses
     @State private var name = ""
     @State private var type = "Personal"
     @State private var amount = 0.0
