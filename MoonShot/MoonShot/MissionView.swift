@@ -34,6 +34,7 @@ struct MissionView: View {
             .foregroundColor(.lightBackground)
             .padding(.vertical)
     }
+    @available(iOS 17.0, *)
     var body: some View {
         
         GeometryReader { geometry in
@@ -42,7 +43,10 @@ struct MissionView: View {
                     Image(mission.image)
                         .resizable()
                         .scaledToFit()
-                        .frame(maxWidth: geometry.size.width * 0.6)
+                        .containerRelativeFrame(.horizontal) { width, axis in
+                                                width * 0.6
+                                            }
+//                        .frame(maxWidth: geometry.size.width * 0.6)
                         .padding(.top)
                     Text(mission.formattedLaunchDate ?? "N/A")
                         .font(.headline)
